@@ -27,14 +27,14 @@ namespace :puma do
         echo 'Puma is already running!';
       else
         if [ -e "#{fetch(:puma_config)}" ]; then
-          cd #{fetch(:puma_root_path)} && #{fetch(:puma_cmd)} -q -e #{fetch(:puma_env)} -C #{fetch(:puma_config)} &
+          cd #{fetch(:puma_root_path)} && #{fetch(:puma_cmd)} -q -e #{fetch(:puma_env)} -C #{fetch(:puma_config)}&
         else
           cd #{fetch(:puma_root_path)} && #{fetch(:puma_cmd)} -q -e #{fetch(:puma_env)} -b "unix://#{fetch(:puma_socket)}" #{puma_port_option} -S #{fetch(:puma_state)} --pidfile #{fetch(:puma_pid)} --control 'unix://#{fetch(:pumactl_socket)}' --redirect-stdout "#{fetch(:puma_stdout)}" --redirect-stderr "#{fetch(:puma_stderr)}" &
         fi
       fi
     ]
   end
-
+  
   desc 'Stop puma'
   task stop: :remote_environment do
     comment "Stopping Puma..."
